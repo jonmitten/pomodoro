@@ -63,7 +63,6 @@ public class Home {
         addAttemptStyle(kind);
         title.setText(kind.getDisplayName());
         setTimerText(mCurrentAttempt.getRemainingSeconds());
-        // TODO: jdm This is creating multiple timelines, we need to fix this!
         mTimeline = new Timeline();
         mTimeline.setCycleCount(kind.getTotalSeconds());
         // keyframes for animation
@@ -86,13 +85,6 @@ public class Home {
         mCurrentAttempt.save();
     }
 
-    private void reset() {
-        clearAttemptStyles();
-        if ( mTimeline != null && mTimeline.getStatus() == Animation.Status.RUNNING ){
-            mTimeline.stop();
-        }
-    }
-
     private void addAttemptStyle(AttemptKind kind) {
         container.getStyleClass().add(kind.toString().toLowerCase());
     }
@@ -102,11 +94,6 @@ public class Home {
         for (AttemptKind kind : AttemptKind.values()){
             container.getStyleClass().remove(kind.toString().toLowerCase());
         }
-    }
-
-    public void DEBUG(ActionEvent actionEvent) {
-
-        System.out.println("Hi, mom");
     }
 
     public void playTimer(){
@@ -135,5 +122,12 @@ public class Home {
 
     public void handlePause(ActionEvent actionEvent) {
         pauseTimer();
+    }
+
+    private void reset() {
+        clearAttemptStyles();
+        if ( mTimeline != null && mTimeline.getStatus() == Animation.Status.RUNNING ){
+            mTimeline.stop();
+        }
     }
 }
